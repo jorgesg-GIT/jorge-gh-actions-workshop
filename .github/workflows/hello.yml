@@ -17,5 +17,5 @@ jobs:
       - run: ls -l
       - name: Multiline Script
         run: |
-        echo "Hello $MY_ENV"
-        echo "Hello $GIBHUB_ACTOR"
+          echo "Hello $MY_ENV"
+          echo "Hello $GIBHUB_ACTOR"
