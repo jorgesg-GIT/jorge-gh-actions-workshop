@@ -5,6 +5,7 @@ on:
 
 jobs:
   greet:
+    env:
       MY_ENV: "Jony Cage"
     runs-on: ubuntu-latest
     steps:
