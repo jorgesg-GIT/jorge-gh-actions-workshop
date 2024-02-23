@@ -2,6 +2,8 @@ name: Hello World Training Workflow
 
 on:
   workflow_dispatch:
+  issues:
+    types: [opened, edited]
 
 jobs:
   greet:
@@ -18,4 +20,4 @@ jobs:
       - name: Multiline Script
         run: |
           echo "Hello $MY_ENV"
-          echo "Hello $GIBHUB_ACTOR"
+          echo "Hello $GITHUB_ACTOR"
