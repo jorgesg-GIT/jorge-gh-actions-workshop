@@ -16,6 +16,6 @@ jobs:
       - uses: actions/checkout@v2
       - run: ls -l
       - name: Multiline Script
-      - run: |
+        run: |
         echo "Hello $MY_ENV"
         echo "Hello $GIBHUB_ACTOR"
