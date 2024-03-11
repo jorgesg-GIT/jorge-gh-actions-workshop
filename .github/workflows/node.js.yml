@@ -71,3 +71,32 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  staging:
+    name: Deploy to Staging
+    needs: [package-and-publish]
+    runs-on: ubuntu-latest
+    ## Only deploy after merges to the main branch, not on every PR
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+    environment:
+      name: staging
+      url: "${{ steps.deploy.outputs.url }}"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log in to Azure using credentials
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZ_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_TENANT_ID }}"}'
+
+      - name: Deploy resources
+        uses: azure/arm-deploy@v1
+        id: deploy
+        with:
+          scope: subscription
+          region: westeurope
+          deploymentName: ${{ vars.APP_NAME }}-deployment
+          template: ./infra/web-app/main.bicep
+          parameters: "containerImage=${{ needs.package-and-publish.outputs.container }} actor=${{ github.actor }} appName=aw-${{ vars.APP_NAME }} repository=${{ github.repository }}"
