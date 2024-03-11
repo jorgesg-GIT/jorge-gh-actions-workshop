@@ -96,7 +96,6 @@ jobs:
         uses: azure/arm-deploy@v1
         id: deploy
         with:
-          scope: subscription
           resourceGroupName: ${{ vars.AZ_RESOURCE_GROUP }}
           region: westeurope
           deploymentName: ${{ vars.AZ_APP_NAME }}-deployment
