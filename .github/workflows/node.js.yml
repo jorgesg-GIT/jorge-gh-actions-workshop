@@ -92,7 +92,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
       - name: Deploy resources
         uses: azure/arm-deploy@v1
         id: deploy
