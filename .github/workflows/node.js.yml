@@ -97,6 +97,7 @@ jobs:
         id: deploy
         with:
           scope: subscription
+          resourceGroupName: ${{ vars.AZ_RESOURCE_GROUP }}
           region: westeurope
           deploymentName: ${{ vars.AZ_APP_NAME }}-deployment
           template: ./infra/web-app/main.bicep
