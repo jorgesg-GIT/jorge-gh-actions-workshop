@@ -40,6 +40,8 @@ jobs:
       contents: read
       
       packages: write
+    outputs:
+      container: ${{ steps.meta.outputs.tags }}  
 
     steps:
       - uses: actions/checkout@v3
