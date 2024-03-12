@@ -3,10 +3,10 @@
 name: Packaging
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -77,7 +77,7 @@ jobs:
     needs: [package-and-publish]
     runs-on: ubuntu-latest
     ## Only deploy after merges to the main branch, not on every PR
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    ##if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
     environment:
@@ -96,8 +96,8 @@ jobs:
         uses: azure/arm-deploy@v1
         id: deploy
         with:
-          resourceGroupName: ${{ vars.AZ_RESOURCE_GROUP }}
+          scope: subscription
           region: westeurope
           deploymentName: ${{ vars.AZ_APP_NAME }}-deployment
           template: ./infra/web-app/main.bicep
-          parameters: "containerImage=${{ needs.package-and-publish.outputs.container }} actor=${{ github.actor }} appName=aw-${{ vars.AZ_APP_NAME }} repository=${{ github.repository }}"
+          parameters: "containerImage=${{ needs.package-and-publish.outputs.container }} actor=${{ github.actor }} appName=${{ vars.AZ_APP_NAME }} repository=${{ github.repository }}"
