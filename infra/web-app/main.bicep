@@ -13,10 +13,13 @@ param actor string
 @description('The repository that started the deployment')
 param repository string
 
+@description('Name of resource group')
+param nameresourcegroup string
+
 targetScope = 'subscription'
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: '${appName}-rg'
+  name: '${nameresourcegroup}'
   location: location
   tags: {
     actor: actor
