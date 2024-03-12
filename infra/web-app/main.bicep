@@ -1,5 +1,5 @@
 @description('The Azure location to create the resources in')
-param location string = 'westeurope'
+param location string = 'northeurope'
 
 @description('Name for the serviceplan and webapp (defines the subdomain)')
 param appName string
@@ -19,7 +19,7 @@ param nameresourcegroup string
 targetScope = 'subscription'
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: '${nameresourcegroup}'
+  name: nameresourcegroup
   location: location
   tags: {
     actor: actor
